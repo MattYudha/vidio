@@ -3,666 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modul 2 — Kewaspadaan Phishing & Social Engineering</title>
+    <title>Peringatan Simulasi Phishing</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #0b0f19;
-            --surface: #131a2a;
-            --surface-hover: #1a233a;
-            --primary: #00f0ff;
-            --primary-dim: rgba(0, 240, 255, 0.15);
-            --secondary: #ff007f;
-            --secondary-dim: rgba(255, 0, 127, 0.15);
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #10b981;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            animation: fadeInDown 1s ease;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 14px;
-            background: var(--primary-dim);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            font-family: 'Fira Code', monospace;
-        }
-
-        header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, #fff, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        section {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-color: rgba(0, 240, 255, 0.2);
-        }
-
-        section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            background-color: #fef2f2;
+            color: #1f2937;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 12px;
-            color: #fff;
-        }
-
-        h2 span.num {
-            color: var(--primary);
-            font-family: 'Fira Code', monospace;
-            opacity: 0.8;
-            font-size: 1.5rem;
-        }
-
-        h3 {
-            font-size: 1.4rem;
-            margin: 35px 0 15px;
-            color: #e2e8f0;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-        }
-
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .objective-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            padding: 24px;
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-
-        .objective-card:hover {
-            background: var(--primary-dim);
-            border-color: var(--primary);
-        }
-
-        .objective-card .icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            display: inline-block;
-        }
-
-        .objective-card h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        ul, ol {
-            margin-left: 20px;
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-
-        strong {
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            margin: 30px 0;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: rgba(0,0,0,0.2);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th, td {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            background: rgba(0, 240, 255, 0.05);
-            color: var(--primary);
-            font-weight: 600;
-            font-family: 'Outfit', sans-serif;
-            white-space: nowrap;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .red-flag {
-            background: rgba(239, 68, 68, 0.05);
-            border-left: 3px solid var(--danger);
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
-            border-radius: 0 8px 8px 0;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.1);
+            max-width: 600px;
+            text-align: center;
+            border-top: 8px solid #dc2626;
+        }
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        h1 {
+            color: #dc2626;
             margin-bottom: 15px;
-            transition: background 0.2s;
+            font-size: 28px;
+            line-height: 1.3;
         }
-        
-        .red-flag:hover {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .red-flag strong {
-            color: var(--danger);
-            display: block;
-            margin-bottom: 5px;
-            font-size: 1.1rem;
-        }
-
-        .highlight-box {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 24px;
-            border-radius: 12px;
-            margin: 30px 0;
-        }
-
-        .highlight-box.danger {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: rgba(239, 68, 68, 0.3);
-        }
-
-        code {
-            font-family: 'Fira Code', monospace;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: var(--primary);
-            font-size: 0.9em;
-        }
-
-        .glow-text {
-            color: var(--primary);
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .step-list {
-            list-style: none;
-            margin: 0 0 30px 0;
-            padding: 0;
-        }
-
-        .step-list li {
-            position: relative;
-            padding-left: 45px;
+        h2 {
+            color: #4b5563;
+            font-size: 18px;
+            font-weight: 600;
             margin-bottom: 25px;
         }
-
-        .step-list li::before {
-            content: attr(data-step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            background: var(--primary-dim);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            font-family: 'Fira Code', monospace;
-        }
-
-        .mockup {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            background: #000;
-            padding: 2px;
-            margin: 30px 0;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
-        
-        .mockup-header {
-            background: #1a1a1a;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            gap: 8px;
-            border-bottom: 1px solid #333;
-        }
-        
-        .mockup-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
-        .dot-red { background: #ff5f56; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #27c93f; }
-        
-        .mockup-body {
-            padding: 30px;
-            background: #fdfdfd;
-            color: #333;
-            font-family: Arial, sans-serif;
-            min-height: 200px;
-        }
-
-        .email-subject {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #111;
-        }
-
-        .email-sender {
-            color: #666;
+        p {
+            line-height: 1.6;
+            color: #374151;
             margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            font-size: 0.95rem;
+            font-size: 16px;
         }
-
-        .email-content {
-            line-height: 1.5;
+        .warning-box {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            text-align: left;
+            border-radius: 4px;
+            margin: 30px 0;
         }
-
-        .btn-phish {
-            display: inline-block;
-            background: #0056b3;
-            color: #fff !important;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            margin: 20px 0;
-            font-weight: bold;
+        .warning-box strong {
+            color: #b91c1c;
+            display: block;
+            margin-bottom: 8px;
         }
-
-        .footer-info {
-            text-align: center;
-            margin-top: 60px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        ul {
+            text-align: left;
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .footer-note {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 30px;
+            border-top: 1px solid #e5e7eb;
             padding-top: 20px;
-            border-top: 1px solid var(--border);
         }
-
-        @media(max-width: 768px) {
-            header h1 { font-size: 2.2rem; }
-            section { padding: 25px; }
-            .objectives-grid { grid-template-columns: 1fr; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 24px; }
+            .icon { font-size: 60px; }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <header>
-            <div class="badge">Modul 2</div>
-            <h1>Kewaspadaan Phishing & Social Engineering</h1>
-            <p>Membangun insting keraguan yang sehat (healthy skepticism) dan kemampuan mendeteksi upaya manipulasi digital.</p>
-        </header>
+        <div class="icon">🚨</div>
+        <h1>OOPS! Anda Telah Mengklik Tautan Phishing!</h1>
+        <h2>Jangan panik, ini hanyalah simulasi edukasi keamanan.</h2>
+        
+        <p>Anda diarahkan ke halaman ini karena Anda mengklik tautan dari email simulasi yang mengatasnamakan <strong>"Pembaruan Sistem Penggajian / Konfirmasi Data Bank"</strong>.</p>
+        
+        <div class="warning-box">
+            <strong>⚠️ Jika ini adalah serangan nyata:</strong>
+            Halaman ini biasanya berupa formulir login palsu yang terlihat sangat mirip dengan situs asli perusahaan atau bank Anda. Jika Anda memasukkan *username* dan *password* di halaman tersebut, <strong>data kredensial Anda akan langsung tercuri oleh peretas!</strong>
+        </div>
 
-        <section id="tujuan">
-            <h2><span class="num">01.</span> Tujuan Pembelajaran Modul</h2>
-            <p>Setelah menyelesaikan modul ini, Anda diharapkan mampu memahami dan mempraktekkan kebiasaan aman di ranah digital.</p>
-            
-            <div class="objectives-grid">
-                <div class="objective-card">
-                    <div class="icon">🧠</div>
-                    <h4>Kognitif</h4>
-                    <p>Peserta mampu mengidentifikasi berbagai bentuk teknik phishing dan membedakan pesan resmi dari upaya manipulasi digital (social engineering).</p>
-                </div>
-                <div class="objective-card">
-                    <div class="icon">🛡️</div>
-                    <h4>Afektif</h4>
-                    <p>Peserta membangun insting keraguan yang sehat <em>(healthy skepticism)</em> dan tidak mudah terpancing oleh urgensi atau intimidasi dalam pesan digital.</p>
-                </div>
-                <div class="objective-card">
-                    <div class="icon">⚡</div>
-                    <h4>Psikomotorik</h4>
-                    <p>Peserta mampu menerapkan teknik verifikasi dasar (memeriksa domain, menyorot tautan/hovering, dan melaporkan pesan mencurigakan).</p>
-                </div>
-            </div>
-        </section>
+        <p>Jika data Anda tercuri, hal ini dapat berakibat pada:</p>
+        <ul>
+            <li>Pengambilalihan akses ke rekening bank Anda.</li>
+            <li>Peretasan akun email dan penyalahgunaan identitas.</li>
+            <li>Kebocoran data rahasia perusahaan tempat Anda bekerja.</li>
+        </ul>
 
-        <section id="peta">
-            <h2><span class="num">02.</span> Peta Sebaran Materi</h2>
-            <p>Agar materi dapat dicerna dengan baik (bitesized learning), konten dibagi menjadi dua sesi keluaran:</p>
-            
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sesi Keluaran</th>
-                            <th>Topik Utama</th>
-                            <th>Fokus Pembelajaran</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Sesi Sekarang (Bagian 1)</strong></td>
-                            <td>
-                                <ul>
-                                    <li>A. Apa itu Phishing?</li>
-                                    <li>B. Psikologi di Balik Phishing</li>
-                                    <li>C. Ragam & Evolusi Jenis Phishing</li>
-                                    <li>D. Anatomi Pesan Phishing (Red Flags)</li>
-                                    <li>E. Teknik Pemalsuan Identitas</li>
-                                </ul>
-                            </td>
-                            <td>Memahami <strong>"Apa"</strong> itu phishing, <strong>"Mengapa"</strong> kita bisa tertipu, dan <strong>"Bagaimana"</strong> cara mengenali ciri-ciri teknis maupun visualnya.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Sesi Berikutnya (Bagian 2)</strong></td>
-                            <td>
-                                <ul>
-                                    <li>F. Protokol Mitigasi & Pencegahan</li>
-                                    <li>G. Studi Kasus & Simulasi Interaktif</li>
-                                </ul>
-                            </td>
-                            <td>Memahami <strong>"Apa yang harus dilakukan"</strong> saat menghadapi serangan dan bagaimana menerapkan prosedur pelaporan yang aman.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="materi-a-e">
-            <h2><span class="num">03.</span> Sesi 1: Konsep & Identifikasi</h2>
-            
-            <p><strong>Tujuan Pembelajaran Sesi 1:</strong> Peserta mampu mengidentifikasi karakteristik serangan phishing, memahami pemicu psikologis yang dimanfaatkan penjahat siber, dan mengenali tanda-tanda bahaya pada email atau pesan instan.</p>
-
-            <h3>A. Apa itu Phishing?</h3>
-            <p>Phishing adalah bentuk serangan siber di mana pelaku menyamar sebagai pihak atau institusi yang sah (seperti bank, perusahaan tempat bekerja, atau layanan pemerintah) untuk menipu korban agar menyerahkan informasi sensitif.</p>
-            <p>Informasi yang diincar umumnya meliputi:</p>
-            <ul>
-                <li><strong>Kredensial login</strong> (nama pengguna dan kata sandi).</li>
-                <li><strong>Data finansial</strong> (nomor kartu kredit, PIN, atau rekening bank).</li>
-                <li><strong>Data pribadi identitas</strong> (KTP, nomor telepon, atau data medis).</li>
-            </ul>
-            <p>Istilah phishing berasal dari kata <em>fishing</em> (memancing). Penjahat siber melempar "umpan" berupa pesan digital yang terlihat meyakinkan, menunggu korban yang lengah untuk "memakan umpan" dengan mengklik tautan, mengunduh lampiran, atau menyerahkan data.</p>
-
-            <h3>B. Mengapa Phishing Sangat Efektif?</h3>
-            <p>Phishing jarang bergantung pada kelemahan sistem komputer rumit; serangan ini justru menyerang pikiran manusia melalui <strong>Rekayasa Sosial (Social Engineering)</strong>. Penjahat merancang pesan untuk memicu emosi agar korban bertindak impulsif:</p>
-            
-            <div class="grid-2">
-                <div class="objective-card">
-                    <h4>🚨 Urgensi & Ketakutan</h4>
-                    <p>Menciptakan rasa panik. Contoh: <em>"Akun bank Anda akan diblokir dalam 24 jam jika tidak melakukan verifikasi sekarang!"</em></p>
-                </div>
-                <div class="objective-card">
-                    <h4>💰 Keserakahan & Hadiah</h4>
-                    <p>Menawarkan keuntungan instan. Contoh: <em>"Selamat! Anda terpilih mendapat undian Rp 50 Juta. Klik di sini untuk klaim."</em></p>
-                </div>
-                <div class="objective-card">
-                    <h4>👮 Otoritas & Kepatuhan</h4>
-                    <p>Menyamar sebagai figur berkuasa (atasan, CEO, aparat) agar korban merasa segan untuk menolak atau mempertanyakan perintah.</p>
-                </div>
-                <div class="objective-card">
-                    <h4>👀 Rasa Ingin Tahu / Empati</h4>
-                    <p>Memancing kepenasaran (<em>"Ada yang mengunggah foto memalukanmu!"</em>) atau memanfaatkan kebaikan hati (penggalangan dana palsu).</p>
-                </div>
-            </div>
-
-            <h3>C. Ragam & Evolusi Jenis Phishing</h3>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Jenis Phishing</th>
-                            <th>Media</th>
-                            <th>Karakteristik Serangan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Email Phishing</strong></td>
-                            <td>Email</td>
-                            <td>Serangan massal yang dikirim ke ribuan alamat email sekaligus dengan pesan generik.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Spear Phishing</strong></td>
-                            <td>Email / Chat</td>
-                            <td>Serangan spesifik. Pelaku mempelajari target (nama, jabatan) agar pesan terlihat personal.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Whaling</strong></td>
-                            <td>Email / Chat</td>
-                            <td>Menargetkan eksekutif tingkat tinggi (CEO, Direktur) untuk transfer dana besar atau akses tingkat tinggi.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Smishing</strong></td>
-                            <td>SMS / WhatsApp</td>
-                            <td>Berupa pesan singkat berkedok paket kurir, tilang elektronik, atau undangan nikah (file .apk).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Vishing</strong></td>
-                            <td>Telepon</td>
-                            <td>Pelaku menelpon sebagai CS bank, menggunakan intimidasi untuk meminta kode OTP.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Quishing</strong></td>
-                            <td>Kode QR</td>
-                            <td>Menempelkan kode QR palsu yang mengarahkan ke situs web jahat ketika dipindai.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>D. Anatomi Pesan Phishing (Red Flags)</h3>
-            <p>Untuk membedakan pesan resmi dengan pesan jebakan, kenali 5 tanda bahaya berikut:</p>
-            
-            <div class="red-flag">
-                <strong>1. Salam Pembuka yang Generik</strong>
-                Institusi resmi umumnya menyebutkan nama terang Anda. Phishing massal sering menggunakan <em>"Nasabah yang terhormat"</em> atau <em>"Dear Customer"</em>.
-            </div>
-            <div class="red-flag">
-                <strong>2. Kesalahan Tata Bahasa (Typos)</strong>
-                Banyak email penipuan dikembangkan menggunakan mesin penerjemah atau memiliki tata bahasa yang buruk dan tidak profesional.
-            </div>
-            <div class="red-flag">
-                <strong>3. Alamat Pengirim Mencurigakan</strong>
-                Nama mungkin terlihat resmi (Bank BCA Support), tapi domain emailnya salah (misal: <code>support-bca@gmail.com</code> atau <code>admin@bca-update.net</code>).
-            </div>
-            <div class="red-flag">
-                <strong>4. Tautan Tidak Sesuai (Mismatched URL)</strong>
-                Teks bertuliskan <em>www.paypal.com</em>, tapi saat di-hover, alamat aslinya mengarah ke <code>www.pay-pal-secure.xyz</code>.
-            </div>
-            <div class="red-flag">
-                <strong>5. Lampiran Tidak Terduga</strong>
-                File dengan format berisiko mengeksekusi program jahat (.exe, .scr, .zip, atau dokumen dengan makro aktif seperti .docm).
-            </div>
-
-            <h3>E. Teknik Pemalsuan Identitas</h3>
-            <ul class="step-list" style="margin-top:20px;">
-                <li data-step="1"><strong>Display Name Spoofing:</strong> Pelaku hanya mengubah nama tampilan email (sering mengecoh pengguna ponsel).</li>
-                <li data-step="2"><strong>Look-alike Domains:</strong> Mengganti satu/dua karakter (misal: <code>www.kl1kbca.com</code> alih-alih <code>www.klikbca.com</code>).</li>
-                <li data-step="3"><strong>Homograph Attacks:</strong> Memanfaatkan abjad lain yang mirip (huruf "a" Sirilik vs Latin), mengelabui browser web.</li>
-                <li data-step="4"><strong>Link Obfuscation:</strong> Menggunakan pemendek tautan (bit.ly) atau menyembunyikan tautan di balik tombol grafis.</li>
-            </ul>
-        </section>
-
-        <section id="materi-f-g">
-            <h2><span class="num">04.</span> Sesi 2: Mitigasi & Simulasi</h2>
-            
-            <h3>F. Protokol Mitigasi & Tindakan Pencegahan</h3>
-            
-            <h4>1. Tindakan Pencegahan Proaktif</h4>
-            <div class="highlight-box">
-                <ul>
-                    <li><strong>Gunakan 2FA:</strong> Aktifkan Autentikasi Dua Faktor (sebaiknya aplikasi seperti Google Authenticator, bukan SMS) di semua akun penting.</li>
-                    <li><strong>Periksa Tautan (Hovering):</strong> Jangan langsung klik. Arahkan kursor di atas tautan untuk melihat alamat asli. Pada ponsel, tekan dan tahan tautan.</li>
-                    <li><strong>Hindari Wi-Fi Publik:</strong> Jangan akses akun finansial atau email korporat di jaringan Wi-Fi publik tanpa VPN.</li>
-                </ul>
-            </div>
-
-            <h4>2. Protokol Darurat Pasca-Insiden</h4>
-            <p>Jika terlanjur mengklik atau memasukkan data ke situs phishing, segera lakukan:</p>
-            <ul class="step-list">
-                <li data-step="1"><strong>Putus Jaringan:</strong> Matikan Wi-Fi/cabut kabel LAN untuk menghentikan infeksi malware lebih lanjut.</li>
-                <li data-step="2"><strong>Ganti Kata Sandi:</strong> Gunakan perangkat lain yang aman untuk mengubah password, terutama jika Anda menggunakan password yang sama di akun lain.</li>
-                <li data-step="3"><strong>Hubungi Pihak Terkait:</strong> Segera hubungi call center resmi (bank/IT support kantor) untuk memblokir akses.</li>
-                <li data-step="4"><strong>Pindai Perangkat:</strong> Jalankan antivirus/anti-malware yang diperbarui secara penuh.</li>
-            </ul>
-
-            <h3>G. Studi Kasus & Panduan Simulasi</h3>
-            
-            <h4>1. Studi Kasus: Serangan Phishing Finansial</h4>
-            <div class="highlight-box danger" style="color: var(--text-main)">
-                <p><strong>Skenario:</strong> Karyawan menerima email dari platform penggajian internal bersubjek: <em>"PENTING: Perubahan Nomor Rekening Gaji Anda"</em>. Meminta klik tautan segera agar gaji tidak tertahan.</p>
-                <p><strong>Analisis Red Flags:</strong></p>
-                <ul style="color: var(--text-main)">
-                    <li><strong>Urgensi Tinggi:</strong> Memanfaatkan ketakutan gaji tidak dibayarkan.</li>
-                    <li><strong>Tautan Palsu:</strong> Tombol mengarah ke domain pihak ketiga yang tidak dikenal.</li>
-                </ul>
-                <p><strong>Hasil Akhir:</strong> Karyawan memasukkan kredensial internal yang kemudian dipakai peretas untuk membobol database perusahaan.</p>
-            </div>
-
-            <h4>2. Panduan Metode Simulasi</h4>
-            <p>Pada bagian akhir modul di Moodle, selesaikan simulasi interaktif menggunakan kuis visual.</p>
-            
-            <div class="mockup">
-                <div class="mockup-header">
-                    <div class="mockup-dot dot-red"></div>
-                    <div class="mockup-dot dot-yellow"></div>
-                    <div class="mockup-dot dot-green"></div>
-                </div>
-                <div class="mockup-body">
-                    <div class="email-subject">PEMBERITAHUAN: Akun Bank Anda Ditangguhkan</div>
-                    <div class="email-sender">
-                        Dari: <strong>Bank Support Team</strong> &lt;admin@update-bank-security.net&gt;<br>
-                        Ke: nasabah-terhormat@email.com
-                    </div>
-                    <div class="email-content">
-                        <p>Nasabah yang terhormat,</p>
-                        <p>Kami mendeteksi aktivitas login yang tidak wajar pada akun Anda. Untuk melindungi dana Anda, akses telah dibatasi sementara waktu.</p>
-                        <p>Silakan klik tombol di bawah ini dan login dalam waktu <strong>12 jam</strong> untuk memulihkan akun Anda, atau akun akan diblokir permanen.</p>
-                        <a href="#" class="btn-phish">Konfirmasi Data Akun Sekarang</a>
-                        <p>Terima kasih,<br>Tim Keamanan</p>
-                    </div>
-                </div>
-            </div>
-
-            <p><strong>Cara Menyelesaikan Simulasi Ini:</strong></p>
-            <ol>
-                <li><strong>Analisis Visual:</strong> Perhatikan gambar tangkapan layar dengan teliti.</li>
-                <li><strong>Periksa 3 Titik Kritis:</strong>
-                    <ul>
-                        <li>Alamat email pengirim (apakah domain asli?).</li>
-                        <li>Gaya bahasa (ada unsur pemaksaan/ancaman?).</li>
-                        <li>Tautan atau lampiran.</li>
-                    </ul>
-                </li>
-                <li><strong>Berikan Jawaban:</strong> Pilih opsi yang tepat dan tulis analisis singkat Anda mengenai indikasi bahaya yang ditemukan untuk skor penuh.</li>
-            </ol>
-            
-            <p class="glow-text" style="text-align: center; margin-top: 40px; font-weight: 500;">
-                "Penjahat siber menggunakan teknik teknis untuk mengelabui mata pengguna agar pesan terlihat seolah-olah berasal dari sumber tepercaya."
-            </p>
-        </section>
-
-        <div class="footer-info">
-            Terakhir diubah: Rabu, 22 Juli 2026, 05:18<br>
-            Modul 2 - Simulasi Kesadaran Keamanan Siber
+        <p>Selalu <strong>periksa alamat email pengirim</strong> (apakah domainnya benar-benar resmi?) dan <strong>jangan terburu-buru mengklik tautan</strong> meskipun pesan tersebut bernada mendesak atau mengancam.</p>
+        
+        <div class="footer-note">
+            Halaman ini aman dan tidak mengumpulkan data pribadi Anda.<br>
+            Tutup halaman ini dan kembali ke materi pelatihan Anda.
         </div>
     </div>
-
 </body>
 </html>
